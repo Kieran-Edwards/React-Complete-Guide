@@ -1,12 +1,16 @@
 import "./ExpenseItem.css";
 
 function ExpenseItem() {
+    const expenseDate = new Date(2021, 2, 28);
+    const expenseTitle = "Car Insurance";
+    const expensePrice = 251.97;
+
     return (
         <div className="expense-item">
-            <div>28th March 2021</div>
+            <div>{expenseDate.toISOString()}</div>
             <div className="expense-item__description">
-                <h2>Insurance</h2>
-                <div className="expense-item__price">£257.97</div>
+                <h2>{expenseTitle}</h2>
+                <div className="expense-item__price">£{expensePrice}</div>
             </div>
         </div>
     );

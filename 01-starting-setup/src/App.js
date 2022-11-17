@@ -2,7 +2,7 @@ import React from "react";
 
 import ExpenseList from "./components/Expenses/ExpenseList";
 
-function App() {
+const App = () => {
     const expenses = [
         {
             id: "e1",
@@ -43,6 +43,6 @@ function App() {
     //     React.createElement("h2", {}, "Let's get started!"),
     //     React.createElement(ExpenseList, { expenses: expenses })
     // );
-}
+};
 
 export default App;

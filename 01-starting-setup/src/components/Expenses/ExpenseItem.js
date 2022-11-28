@@ -6,6 +6,10 @@ import ExpenseDate from "./ExpenseDate";
 import "./ExpenseItem.css";
 
 const ExpenseItem = (props) => {
+    const clickHandler = () => {
+        console.log("clicked");
+    };
+
     return (
         <Card className="expense-item">
             <ExpenseDate date={props.date} />
@@ -14,6 +18,8 @@ const ExpenseItem = (props) => {
                 <h2>{props.title}</h2>
                 <div className="expense-item__price">£{props.price}</div>
             </div>
+
+            <button onClick={clickHandler}>Change Title</button>
         </Card>
     );
 };

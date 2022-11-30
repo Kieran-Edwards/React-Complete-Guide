@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import Card from "../UI/Card";
 import ExpenseItem from "./ExpenseItem";
-import ExpenseFilter from "./expenseFilter";
+import ExpenseFilter from "./ExpenseFilter";
 
 import "./ExpenseList.css";
 
@@ -24,7 +24,7 @@ const ExpenseList = (props) => {
                 {props.expenses.map((expense) => (
                     <ExpenseItem
                         title={expense.title}
-                        price={expense.price}
+                        amount={expense.amount}
                         date={expense.date}
                     />
                 ))}

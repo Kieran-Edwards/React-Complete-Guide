@@ -7,6 +7,12 @@ const SimpleInput = (props) => {
     const inputNameIsValid = enteredName.trim() !== "";
     const touchedNameInputIsInvalid = inputNameIsTouched && !inputNameIsValid;
 
+    let formIsValid = false;
+
+    if (inputNameIsValid) {
+        formIsValid = true;
+    }
+
     const nameInputChangeHandler = (event) => {
         setEnteredName(event.target.value);
     };
@@ -52,7 +58,7 @@ const SimpleInput = (props) => {
             </div>
             {touchedNameInputIsInvalid && <p>Please enter a valid name</p>}
             <div className="form-actions">
-                <button>Submit</button>
+                <button disabled={!formIsValid}>Submit</button>
             </div>
         </form>
     );

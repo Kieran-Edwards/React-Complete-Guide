@@ -3,14 +3,34 @@ import { useState, useRef } from "react";
 const SimpleInput = (props) => {
     const nameInputRef = useRef();
     const [enteredName, setEnteredName] = useState("");
-    const [inputNameIsValid, setInputNameIsValid] = useState(true);
+    const [inputNameIsValid, setInputNameIsValid] = useState(false);
+    const [inputNameIsTouched, setInputNameIsTouched] = useState(false);
 
     const nameInputChangeHandler = (event) => {
         setEnteredName(event.target.value);
+
+        if (event.target.value.trim() !== "") {
+            setInputNameIsValid(true);
+        }
+    };
+
+    const nameInputTouchHandler = () => {
+        setInputNameIsTouched(true);
+    };
+
+    const nameInputBlurHandler = () => {
+        setInputNameIsTouched(true);
+
+        if (enteredName.trim() === "") {
+            setInputNameIsValid(false);
+            return;
+        }
     };
 
     const formSubmissionHandler = (event) => {
         event.preventDefault();
+
+        nameInputTouchHandler();
 
         if (enteredName.trim() === "") {
             setInputNameIsValid(false);
@@ -25,9 +45,11 @@ const SimpleInput = (props) => {
         setEnteredName("");
     };
 
-    const formControlClass = inputNameIsValid
-        ? "form-control"
-        : "form-control invalid";
+    const touchedNameInputIsInvalid = inputNameIsTouched && !inputNameIsValid;
+
+    const formControlClass = touchedNameInputIsInvalid
+        ? "form-control invalid"
+        : "form-control";
 
     return (
         <form onSubmit={formSubmissionHandler}>
@@ -39,9 +61,10 @@ const SimpleInput = (props) => {
                     type="text"
                     id="name"
                     value={enteredName}
+                    onBlur={nameInputBlurHandler}
                 />
             </div>
-            {!inputNameIsValid && <p>Please enter a valid name</p>}
+            {touchedNameInputIsInvalid && <p>Please enter a valid name</p>}
             <div className="form-actions">
                 <button>Submit</button>
             </div>

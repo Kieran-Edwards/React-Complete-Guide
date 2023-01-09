@@ -1,5 +1,8 @@
 import useInput from "../hooks/use-input";
 
+const isNotEmpty = (value) => value.trim() !== "";
+const isEmail = (value) => /(.+)@(.+){2,}\.(.+){2,}/.test(value);
+
 const BasicForm = (props) => {
     const {
         value: nameValue,
@@ -8,7 +11,7 @@ const BasicForm = (props) => {
         changeHandler: nameChangeHandler,
         touchHandler: nameTouchHandler,
         reset: nameReset,
-    } = useInput((value) => value.trim() !== "");
+    } = useInput(isNotEmpty);
 
     const {
         value: surnameValue,
@@ -17,7 +20,7 @@ const BasicForm = (props) => {
         changeHandler: surnameChangeHandler,
         touchHandler: surnameTouchHandler,
         reset: surnameReset,
-    } = useInput((value) => value.trim() !== "");
+    } = useInput(isNotEmpty);
 
     const {
         value: emailValue,
@@ -26,12 +29,18 @@ const BasicForm = (props) => {
         changeHandler: emailChangeHandler,
         touchHandler: emailTouchHandler,
         reset: emailReset,
-    } = useInput((value) => /(.+)@(.+){2,}\.(.+){2,}/.test(value));
+    } = useInput(isEmail);
+
+    let formIsValid = false;
+
+    if (nameIsValid && surnameIsValid && emailIsValid) {
+        formIsValid = true;
+    }
 
     const formSubmitHandler = (e) => {
         e.preventDefault();
 
-        if (nameHasError || surnameHasError || emailHasError) {
+        if (!formIsValid) {
             return;
         }
 
@@ -60,7 +69,9 @@ const BasicForm = (props) => {
                         onBlur={nameTouchHandler}
                         onChange={nameChangeHandler}
                     />
-                    {nameHasError && <p>Enter a valid Name</p>}
+                    {nameHasError && (
+                        <p className="error-text">Enter a valid Name</p>
+                    )}
                 </div>
                 <div className={surnameClass}>
                     <label htmlFor="surname">Last Name</label>
@@ -71,7 +82,9 @@ const BasicForm = (props) => {
                         onBlur={surnameTouchHandler}
                         onChange={surnameChangeHandler}
                     />
-                    {surnameHasError && <p>Enter a valid Surname</p>}
+                    {surnameHasError && (
+                        <p className="error-text">Enter a valid Surname</p>
+                    )}
                 </div>
             </div>
             <div className={emailClass}>
@@ -83,10 +96,12 @@ const BasicForm = (props) => {
                     onBlur={emailTouchHandler}
                     onChange={emailChangeHandler}
                 />
-                {emailHasError && <p>Enter a valid E-mail</p>}
+                {emailHasError && (
+                    <p className="error-text">Enter a valid E-mail</p>
+                )}
             </div>
             <div className="form-actions">
-                <button>Submit</button>
+                <button disabled={!formIsValid}>Submit</button>
             </div>
         </form>
     );

@@ -1,27 +1,41 @@
-import { useState } from "react";
+import { useReducer } from "react";
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case "setValue":
+            return { ...state, value: action.payload };
+        case "setTouched":
+            return { ...state, touched: action.payload };
+        case "reset":
+            return { value: "", touched: false };
+        default:
+            throw new Error();
+    }
+};
 
 const useInput = (validation) => {
-    const [value, setValue] = useState("");
-    const [touched, setTouched] = useState(false);
+    const [state, dispatch] = useReducer(reducer, {
+        value: "",
+        touched: false,
+    });
 
-    const isValid = validation(value);
-    const hasError = !isValid && touched;
+    const isValid = validation(state.value);
+    const hasError = !isValid && state.touched;
 
     const changeHandler = (e) => {
-        setValue(e.target.value);
+        dispatch({ type: "setValue", payload: e.target.value });
     };
 
     const touchHandler = () => {
-        setTouched(true);
+        dispatch({ type: "setTouched", payload: true });
     };
 
     const reset = () => {
-        setValue("");
-        setTouched(false);
+        dispatch({ type: "reset" });
     };
 
     return {
-        value,
+        value: state.value,
         isValid,
         hasError,
         changeHandler,

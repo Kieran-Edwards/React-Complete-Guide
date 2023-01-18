@@ -1,0 +1,23 @@
+{
+  "name": "training",
+  "version": "1.0.0",
+  "description": "",
+  "main": "redux-demo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kieran-Edwards/React-Complete-Guide.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kieran-Edwards/React-Complete-Guide/issues"
+  },
+  "homepage": "https://github.com/Kieran-Edwards/React-Complete-Guide#readme",
+  "dependencies": {
+    "redux": "^4.2.0"
+  }
+}
